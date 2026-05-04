@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dapur Putri | Jajanan Higienis</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="img/logo.png" type="image/png">
+</head>
+<body>
+
+    <div id="loader">
+        <div id="toast" class="toast-notif">✅ Produk berhasil ditambah!</div>
+        <div class="loader-content">
+            <img src="img/logo.png" alt="Logo Dapur Putri">
+            <div class="pulse"></div>
+            <p>Menyiapkan Jajanan Higienis...</p>
+        </div>
+    </div>
+
+    <div class="promo-bar">
+        <div class="promo-track">
+            <span>Menerima Pesanan Berskala Besar (Arisan, Rapat, Ulang Tahun) • </span>
+            <span>Menerima Pesanan Berskala Besar (Arisan, Rapat, Ulang Tahun) • </span>
+        </div>
+    </div>
+
+    <nav>
+        <div class="logo">
+            <a href="javascript:void(0)" onclick="openTab(event, 'home')" style="display: flex; align-items: center; text-decoration: none;">
+                <img src="img/logo.png" class="img-logo" alt="Logo">
+                <div class="logo-text">Dapur<span>Putri</span></div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="javascript:void(0)" onclick="openTab(event, 'home')" class="tab-link active">Home</a></li>
+            <li><a href="javascript:void(0)" onclick="openTab(event, 'menu')" class="tab-link">Menu</a></li>
+            <li><a href="javascript:void(0)" onclick="openTab(event, 'cara-order')" class="tab-link">Cara Order</a></li>
+            <li><a href="javascript:void(0)" onclick="openTab(event, 'testimoni')" class="tab-link">Testimoni</a></li>
+            <li><a href="javascript:void(0)" onclick="openTab(event, 'lokasi')" class="tab-link">Lokasi</a></li>
+            <li><a href="javascript:void(0)" onclick="openTab(event, 'faq')" class="tab-link">FAQ</a></li>
+        </ul>
+        <div class="dark-mode-switch" onclick="toggleDarkMode()">
+            <i class="fas fa-moon" id="dark-icon"></i>
+        </div>
+    </nav>
+
+    <div id="cart-icon" onclick="bukaModalKeranjang()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+    </div>
+
+    <main id="main-content">
+        
+        <section id="home" class="tab-content active-tab">
+            <header class="hero">
+                <div data-aos="fade-up">
+                    <h1>Jajanan Lokal,<br>Kualitas Spesial.</h1>
+                    <p>Renyah, Gurih, dan Higienis 100%. Produksi Rumahan Brebes.</p>
+                    <button onclick="openTab(event, 'menu')" class="btn-utama">Lihat Menu Sekarang</button>
+                </div>
+            </header>
+        </section>
+
+        <section id="menu" class="tab-content container">
+            <h2 data-aos="fade-down">Menu Favorit</h2>
+            <div class="menu-grid">
+                <div class="card" onclick="bukaModal('Cireng Isi', 3500, {
+                    'default': {gbr: 'img/defaultcireng.png', harga: 3500},
+                    'Ayam Pedas': {gbr: 'img/ayamsuirpdes.jpg', harga: 3500},
+                    'Ayam Tidak Pedas': {gbr: 'img/cirengpolos.jpg', harga: 3500}
+                })">
+                    <div class="badge-promo">BEST SELLER 🔥</div>
+                    <div class="card-img"><img src="img/defaultcireng.png"></div>
+                    <div class="card-body">
+                        <h3>Cireng Isi</h3>
+                        <p class="price">Rp 3.500 - Rp 10.000</p>
+                        <p class="deskripsi-singkat">3.500 /pcs isi 5 ( mentah )</p>
+                        <p class="deskripsi-singkat"> jika ingin mateng tanyakan melalui WhatsApp</p>
+                        <div class="btn-beli">Pilih Varian</div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="bukaModal('Dimsum Premium', 15000, {
+                    'default': {gbr: 'img/defaultdimsum.png', harga: 15000},
+                    'Ayam': {gbr: 'img/dimsum.jpg', harga: 15000},
+                    'Udang': {gbr: 'img/dimsum-udang.jpg', harga: 18000}
+                })">
+               <div class="card habis">
+                        <div class="card-img">
+        <img src="img/defaultdimsum.png"> </div>
+        <div class="habis-badge">HABIS</div>
+    </div>
+    <div class="card-body">
+        <h3>Dimsum Premium
+        <p class="price">Rp 15.000</p>
+        <div class="btn-beli" style="background: #a0aec0;">Stok Habis</div>
+    </div>
+</div>
+
+                <div class="card" onclick="bukaModal('Risolis', 10000, {
+                    'default': {gbr: 'img/defaultrisol.png', harga: 10000},
+                    'Original': {gbr: 'img/risol.jpg', harga: 10000},
+                    'Pedas': {gbr: 'img/ayamsuirpdes.jpg', harga: 10000}
+                })">
+                    <div class="badge-promo" style="background: #2f855a;">STOK TERBATAS ⏳</div>
+                    <div class="card-img"><img src="img/defaultrisol.png"></div>
+                    <div class="card-body">
+                        <h3>Risolis</h3>
+                        <p class="price">Rp 10.000 </p>
+                         <p class="deskripsi-singkat">3.500 /pcs isi 5 ( mentah )</p>
+                        <p class="deskripsi-singkat"> jika ingin mateng tanyakan melalui WhatsApp</p>
+                        <div class="btn-beli">Pilih Varian</div>
+                    </div>
+                </div>
+
+                 <div class="card" onclick="bukaModal('Mie Ayam', 10000, {
+    'default': {gbr: 'img/mie.jpg', harga: 10000},
+    'Original': {gbr: 'img/miepolos.jpg', harga: 10000},
+    'Ceker': {gbr: 'img/ceker.jpg', harga: 12000}
+})">
+    <div class="badge-promo" style="background: #2f855a;">BERLAKU HANYA 3 HARI ⏳</div>
+    <div class="card-img"><img src="img/mie.jpg"></div>
+    <div class="card-body">
+        <h3>Mie Ayam Spesial</h3>
+        <p class="price">Rp 10.000 - Rp 12.000</p>
+        <div class="btn-beli">Pilih Varian</div>
+    </div>
+</div>
+        </section>
+
+        <section id="cara-order" class="tab-content container">
+            <h2 data-aos="fade-down">Pesan Gak Pake Ribet!</h2>
+            <div class="order-grid">
+                <div class="order-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-icon"><i class="fas fa-utensils"></i><div class="step-num">1</div></div>
+                    <h4>Pilih Menu</h4><p>Cek katalog rasa favoritmu.</p>
+                </div>
+                <div class="order-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-icon"><i class="fas fa-cart-plus"></i><div class="step-num">2</div></div>
+                    <h4>Tambah Keranjang</h4><p>Pilih varian dan jumlah.</p>
+                </div>
+                <div class="order-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-icon"><i class="fab fa-whatsapp"></i><div class="step-num">3</div></div>
+                    <h4>Checkout WA</h4><p>Kirim daftar belanjaan sekaligus.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimoni" class="tab-content container">
+            <h2 data-aos="fade-down">Kepuasan Pelanggan</h2>
+            <p>Kami bangga menjadi bagian dari momen ngemil Anda di Brebes.</p>
+            <div class="testi-grid">
+                <div class="testi-item" data-aos="fade-up">
+                    <div class="testi-header">
+                        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Terverifikasi</span>
+                    </div>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <p>"Cireng isinya beneran premium. Ayamnya melimpah dan rasanya konsisten banget dari dulu."</p>
+                    <div class="testi-user">
+                        <div class="user-info"><strong>Milaa</strong><small>📍 Padasugih, Brebes</small></div>
+                    </div>
+                </div>
+
+                <div class="testi-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testi-header">
+                        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Terverifikasi</span>
+                    </div>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <p>"Risol Mayo paling lumer yang pernah saya coba. Higienis banget, kemasannya juga rapi."</p>
+                    <div class="testi-user">
+                        <div class="user-info"><strong>Adi Saputra</strong><small>📍 Jatibarang, Brebes</small></div>
+                    </div>
+                </div>
+
+                <div class="testi-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="testi-header">
+                        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Terverifikasi</span>
+                    </div>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <p>"Pesan 50 porsi dimsum buat acara kantor, bumbunya juara! Rekan kerja pada ketagihan."</p>
+                    <div class="testi-user">
+                        <div class="user-info"><strong>Ibu Sari</strong><small>📍 Brebes Kota</small></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lokasi" class="tab-content container">
+            <div class="lokasi-box" data-aos="zoom-in">
+                <div class="lokasi-info">
+                    <span style="color: #f6ad55; font-weight: 800; text-transform: uppercase;">Cek Pengiriman</span>
+                    <h3>Hitung Ongkir Otomatis 🛵</h3>
+                    <div style="margin-top: 20px;">
+                        <label>Pilih Wilayah Anda:</label>
+                        <select id="pilihWilayah" onchange="hitungOngkir()" style="width:100%; padding:15px; border-radius:15px; border:2px solid #edf2f7; margin-bottom: 15px; font-weight: 600;">
+                            <option value="0">-- Pilih Wilayah --</option>
+                            <option value="7000">Brebes Kota (Rp 7.000)</option>
+                            <option value="0">Sekitar Jatibarang (Gratis)</option>
+                        </select>
+                        <div id="hasilOngkir" style="display:none; background: #f0fff4; padding: 15px; border-radius: 15px; border-left: 5px solid #38a169; margin-top: 15px;">
+                            <p style="font-size: 0.9rem; color: #2f855a; margin: 0;">Estimasi Ongkir: <strong id="teksOngkir">Rp 0</strong></p>
+                            <p id="promoOngkir" style="font-size: 0.75rem; color: #38a169; margin-top: 5px; font-weight: 600;">💡 Belanja minimal Rp 50.000 untuk Gratis Ongkir!</p>
+                        </div>
+                    </div>
+                    <div class="area-list">
+                        <span class="area-tag">Janegara</span>
+                        <span class="area-tag">Jatibarang</span>
+                        <span class="area-tag">Brebes Kota</span>
+                        <span class="area-tag">Songgom</span>
+                    </div>
+                    <a href="https://wa.me/6285972553371" id="btnWaOngkir" class="btn-utama" style="text-decoration:none; margin-top: 20px; display: block; text-align: center;">Tanya Admin di WA</a>
+                </div>
+                <div class="lokasi-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15843.513515438814!2d109.0534564!3d-6.8926219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6fb9b3433367b9%3A0xc3f58a362208e6f1!2sKec.%20Jatibarang%2C%20Kabupaten%20Brebes%2C%20Jawa%20Tengah!5e0!3m2!1sid!2sid!4v1710000000000!5m2!1sid!2sid" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="tab-content container">
+            <h2 data-aos="fade-down">Frequently Asked Questions</h2>
+            <p style="margin-bottom: 40px;">Segala hal yang perlu Anda ketahui tentang Dapur Putri.</p>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">Bagaimana sistem pemesanannya? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Kami menggunakan sistem <strong>Pre-Order (PO)</strong>. Pesanan diproses setiap pagi agar Anda menerima produk dalam kondisi paling segar.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Berapa lama ketahanan makanannya? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Cireng dan Risol tahan 2-3 hari di suhu ruang, atau 2 minggu di dalam <strong>Freezer</strong>.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Apakah produk Dapur Putri Halal? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Seluruh bahan baku dijamin 100% Halal dan Higienis.</p></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="modalProduk" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="tutupModal()">×</span>
+            <img id="modalImg" src="" style="width:100%; border-radius:20px; margin-bottom: 20px;">
+            <h2 id="modalTitle"></h2>
+            <p id="modalPrice" style="color:#2b6cb0; font-weight: 800; font-size: 1.4rem; margin-bottom: 20px;"></p>
+            <div style="text-align:left; margin-bottom:20px;">
+                <label>Pilih Varian Produk:</label>
+                <select id="varianPilihan" onchange="gantiGambarVarian()" style="width:100%; padding:15px; border-radius:15px; border:2px solid #edf2f7; font-weight: 600;"></select>
+            </div>
+            <div style="text-align:left; margin-bottom:25px;">
+                <label>Mau beli berapa pcs?</label>
+                <input type="number" id="jumlahPesanan" value="1" min="1">
+            </div>
+            <button onclick="tambahKeKeranjang()" class="btn-konfirmasi"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</button>
+        </div>
+    </div>
+
+   <div id="modalKeranjang" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <span class="close" onclick="tutupModalKeranjang()">×</span>
+        <h2 style="margin-bottom: 20px; color: #1a365d;">🛒 Keranjang Saya</h2>
+
+        <div id="free-shipping-goal" style="padding: 15px; background: #fffaf0; border-radius: 15px; margin-bottom: 20px; border: 1px dashed #f6ad55; text-align: center;">
+            <p id="shipping-text" style="font-size: 0.85rem; margin-bottom: 8px; color: #1a365d;"></p>
+            <div style="width: 100%; height: 8px; background: #edf2f7; border-radius: 10px; overflow: hidden;">
+                <div id="shipping-bar" style="width: 0%; height: 100%; background: #f6ad55; transition: 0.5s;"></div>
+            </div>
+        </div>
+<div class="struk-animasi">
+    <div id="isi-keranjang"></div>
+    <div id="total-bayar" style="display:none; justify-content: space-between; margin-top: 15px; font-weight: bold;">
+        <span>Total:</span>
+        <span id="text-total">Rp 0</span>
+    </div>
+</div>
+
+        <button id="btn-checkout" onclick="checkoutWA()" class="btn-konfirmasi" style="display:none; background:#25d366; margin-top:20px;">Pesan via WhatsApp</button>
+
+        <div style="margin-top: 20px; border: 2px dashed #cbd5e0; padding: 15px; border-radius: 15px;">
+            <p style="font-size: 0.8rem; margin-bottom: 5px; color: #718096;">Pembayaran Transfer (SEABANK)
+           <p style="font-size: 0.8rem; margin-bottom: 5px; color: #718096;"> screenshot bukti pembayaran
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <code style="font-size: 1.1rem; color: #1a365d; font-weight: bold;">901845191217
+                <button onclick="salinRekening('123456789')" style="background: #1a365d; color: white; border: none; padding: 5px 10px; border-radius: 8px; font-size: 0.7rem; cursor: pointer;">SALIN</button>
+            </div>
+        </div>
+
+        <p style="font-size: 0.75rem; color: #718096; margin-top: 15px; text-align: center;">*Data akan dikirim ke WhatsApp admin.</p>
+    </div>
+</div>
+
+    <footer>
+
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left;">
+            <div>
+                <h3 style="color: #f6ad55; margin-bottom: 20px;">Dapur Putri</h3>
+                <p style="font-size: 0.9rem; color: #a0aec0;">Jajanan higienis khas Brebes yang dibuat dengan cinta dan bahan berkualitas premium.</p>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 20px; color:white;">Jam Operasional</h4>
+                <p style="font-size: 0.9rem; color: #a0aec0;">Senin - Sabtu: 09.00 - 17.00<br>Minggu: Libur (Self-Healing)</p>
+            </div>
+            <div style="display: flex; gap: 20px; font-size: 1.8rem; justify-content: center; margin-top: 20px;">
+    <a href="https://www.instagram.com/username_ig_putri" target="_blank" class="sosmed-link">
+        <i class="fab fa-instagram"></i>
+    </a>
+    
+    <a href="https://www.facebook.com/Leni Tarlina" target="_blank" class="sosmed-link">
+        <i class="fab fa-facebook"></i>
+    </a>
+    
+    <a href="https://www.tiktok.com/@username_tiktok_putri" target="_blank" class="sosmed-link">
+        <i class="fab fa-tiktok"></i>
+    </a>
+</div>
+        </div>
+        
+        
+        <div id="status-toko" style="display:inline-block; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; margin-bottom: 10px;">
+    </div>
+    
+        <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #2d3748; color: #718096; font-size: 0.8rem;">
+            © 2026 Whyu. All Rights Reserved.
+        </div>
+
+    </footer>
+
+    <a href="https://wa.me/6285972553371" class="floating-wa" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" width="35">
+    </a>
+
+    <div id="sales-notification" class="sales-notif">
+        <div class="notif-img"><img src="img/logo.png" alt="Dapur Putri"></div>
+        <div class="notif-content">
+            <p id="notif-text">Seseorang baru saja membeli <strong>3 Dimsum Premium</strong></p>
+            <small id="notif-time">Baru saja • 📍 Padasugih</small>
+        </div>
+        <button onclick="closeNotif()" class="close-notif">×</button>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+
+
+    <div id="custom-toast" class="toast-salin">✅ Nomor Rekening Berhasil Disalin!</div>
+</body>
+</html>

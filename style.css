@@ -1,0 +1,895 @@
+/* =========================================
+   1. RESET & BASE STYLES
+   ========================================= */
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* 1. Body utama tetap bersih */
+body { 
+    margin: 0; padding: 0;
+    color: #333; 
+    line-height: 1.6; 
+    overflow-x: hidden; 
+    background-color: #f0f5fa; /* WARNA DASAR KAMU */
+    position: relative;
+}
+
+/* 2. Tekstur Titik-Titik Halus (Tanpa Gambar Luar) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    
+    /* TEKSTUR DOTS CSS (Pasti Muncul) */
+    background-image: radial-gradient(#d1d9e6 1px, transparent 1px);
+    background-size: 20px 20px; /* Jarak antar titik */
+    
+    opacity: 0.5; 
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 3. Sesuaikan untuk Dark Mode */
+body.dark-theme::before {
+    background-image: radial-gradient(#334155 1px, transparent 1px);
+    opacity: 0.3;
+}
+
+/* =========================================
+   2. KEYFRAMES & ANIMATIONS
+   ========================================= */
+@keyframes pulseAnim {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+@keyframes fadeText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes fadeEffect { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes loading-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+@keyframes cart-shake {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.2) rotate(15deg); }
+    50% { transform: scale(1.2) rotate(-15deg); }
+    100% { transform: scale(1); }
+}
+
+/* =========================================
+   3. PRELOADER
+   ========================================= */
+#loader {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #1a365d;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 10000; transition: opacity 0.5s ease, visibility 0.5s;
+}
+.loader-hidden { opacity: 0; visibility: hidden; }
+.loader-content { text-align: center; position: relative; }
+.loader-content img { width: 80px; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
+.loader-content p { color: white; margin-top: 25px; font-weight: 500; animation: fadeText 1.5s infinite; }
+.pulse {
+    position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%);
+    width: 110px; height: 110px; background: rgba(99, 179, 237, 0.4);
+    border-radius: 50%; animation: pulseAnim 1.5s infinite ease-out;
+}
+
+/* =========================================
+   4. NAVIGATION & PROMO BAR
+   ========================================= */
+.promo-bar {
+    background: #f6ad55; color: #1a365d; padding: 8px 0;
+    font-size: 0.8rem; font-weight: bold; overflow: hidden;
+    white-space: nowrap; width: 100%;
+}
+.promo-track { display: inline-block; animation: marquee 20s linear infinite; }
+
+nav {
+    background-color: #1a365d; display: flex;
+    justify-content: space-between; align-items: center;
+    padding: 15px 5%; position: sticky; top: 0; z-index: 1000;
+    nav {
+    /* ... kode lama kamu ... */
+    background: rgba(26, 54, 93, 0.8) !important; 
+    backdrop-filter: blur(10px); /* Bikin tekstur di belakang nav jadi blur mewah */
+    -webkit-backdrop-filter: blur(10px);
+}
+}
+.logo { display: flex; align-items: center; }
+.img-logo { height: 40px; width: auto; }
+.logo-text { margin-left: 10px; font-size: 1.4rem; font-weight: bold; color: white; }
+.logo-text span { color: #63b3ed; }
+
+.nav-links { display: flex; list-style: none; gap: 20px; }
+.tab-link { text-decoration: none; color: white; font-weight: 500; font-size: 0.95rem; transition: 0.3s; cursor: pointer; }
+.tab-link.active { color: #f6ad55 !important; border-bottom: 2px solid #f6ad55; }
+
+.tab-content { display: none; animation: fadeEffect 0.5s; }
+.tab-content.container { padding-top: 60px; padding-bottom: 80px; }
+.active-tab { display: block !important; }
+
+/* =========================================
+   5. HERO & CARA ORDER
+   ========================================= */
+.hero {
+    background-color: #2b6cb0; padding: 100px 10%; text-align: center;
+    color: white; min-height: 80vh; display: flex; align-items: center; justify-content: center;
+}
+.hero h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.2; }
+.btn-utama {
+    display: inline-block; background-color: #f6ad55; color: #1a365d;
+    padding: 15px 35px; border-radius: 30px; font-weight: bold; margin-top: 25px;
+    transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: none; cursor: pointer;
+}
+/* --- TOMBOL TAMBAH KERANJANG DI MODAL --- */
+.btn-konfirmasi {
+    display: block !important;
+    width: 100%; /* Buat lebar penuh biar gampang dipencet */
+    background: linear-gradient(135deg, #1a365d, #2b6cb0); /* Biru Navy Mewah */
+    color: white !important;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn-konfirmasi:hover {
+    background: #f6ad55; /* Berubah oranye saat di-hover */
+    color: #1a365d !important;
+    transform: translateY(-2px);
+}
+
+/* Biar ikon keranjangnya ada jarak dengan teks */
+.btn-konfirmasi i {
+    margin-right: 8px;
+}
+
+.order-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
+.order-step { flex: 1; min-width: 200px; max-width: 250px; padding: 30px 20px; background: #f8fbff; border-radius: 20px; transition: 0.3s; border: 1px solid #edf2f7; text-align: center; }
+.step-icon { width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px; font-size: 2rem; color: #2b6cb0; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+.step-num { position: absolute; top: -5px; right: -5px; width: 30px; height: 30px; background: #f6ad55; color: #1a365d; border-radius: 50%; font-size: 0.9rem; font-weight: bold; display: flex; justify-content: center; align-items: center; border: 3px solid white; }
+
+/* =========================================
+   6. MENU & CARDS
+   ========================================= */
+.container { padding: 60px 10%; text-align: center; }
+.menu-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+
+.card { 
+    position: relative; background: white; width: 280px; border-radius: 20px; 
+    overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer; 
+}
+.card:hover { transform: translateY(-10px); }
+
+.card-img { height: 200px; overflow: hidden; position: relative; z-index: 1; background: #edf2f7; }
+.card-img::after {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+.card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; position: relative; z-index: 2; background: rgb(35, 3, 107); }
+.card:hover .card-img img { transform: scale(1.1); }
+.card-body { padding: 25px; position: relative; z-index: 1; }
+
+.badge-promo {
+    position: absolute; top: 12px; left: -5px;
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+    color: white; padding: 6px 15px; border-radius: 5px 20px 20px 5px;
+    font-size: 0.7rem; font-weight: 800; z-index: 50;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.2); text-transform: uppercase;
+    letter-spacing: 1px; transform: rotate(-5deg); pointer-events: none; border-left: 3px solid #fff;
+}
+
+/* =========================================
+   7. TESTIMONI & FAQ
+   ========================================= */
+.testi-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
+.testi-item { 
+    background: white; padding: 30px; border-radius: 25px; width: 320px; 
+    box-shadow: 0 10px 30px rgba(26, 54, 93, 0.04); border: 1px solid #f0f4f8; text-align: left;
+}
+.testi-stars { color: #f6ad55; margin-bottom: 10px; font-size: 0.8rem; }
+
+.faq-container { text-align: left; max-width: 800px; margin: 0 auto; }
+.faq-item { background: white; margin-bottom: 15px; border-radius: 20px; overflow: hidden; border: 1px solid #edf2f7; }
+.faq-question { width: 100%; padding: 20px; background: white; border: none; text-align: left; font-weight: 700; color: #1a365d; cursor: pointer; display: flex; justify-content: space-between; }
+.faq-answer { max-height: 0; overflow: hidden; transition: 0.4s; background: #fafafa; padding: 0 20px; }
+.faq-item.active .faq-answer { max-height: 200px; padding: 20px; }
+
+/* =========================================
+   8. UI ELEMENTS (CART & TOAST)
+   ========================================= */
+#cart-icon { position: fixed; bottom: 110px; right: 30px; width: 60px; height: 60px; background-color: #1a365d; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 998; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.3s; }
+#cart-count { position: absolute; top: 0; right: 0; background: #f6ad55; color: #1a365d; width: 22px; height: 22px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; display: flex; justify-content: center; align-items: center; border: 2px solid #1a365d; }
+.shake { animation: cart-shake 0.5s ease-in-out; background-color: #f6ad55 !important; }
+
+.item-keranjang { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #edf2f7; }
+.hapus-item { color: #e53e3e; cursor: pointer; margin-left: 15px; }
+
+.modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+.modal-content { background: white; margin: 5% auto; padding: 35px; width: 90%; max-width: 420px; border-radius: 25px; text-align: center; animation: slideUp 0.4s ease; position: relative; }
+
+#jumlahPesanan { width: 100%; padding: 15px; font-size: 1.2rem; font-weight: bold; text-align: center; border: 2px solid #edf2f7; border-radius: 15px; background-color: #f8fbff; margin: 10px 0 20px; }
+#btn-checkout {
+    /* 1. Paksa jadi block agar margin auto jalan */
+    display: block !important; 
+    
+    /* 2. Margin Auto (Kiri & Kanan otomatis bagi dua) */
+    margin: 25px auto 10px auto !important; 
+    
+    /* 3. Tentukan Lebar Tombol */
+    width: 90%; /* Biar gak mepet banget ke pinggir modal, sisakan 10% */
+    max-width: 350px; /* Biar di laptop gak kepanjangan */
+    
+    /* 4. Teks di tengah tombol */
+    text-align: center;
+    
+    /* Sisa kode gradasi kamu tetap di bawah sini... */
+    background: linear-gradient(135deg, #25d366, #128c7e) !important;
+    border-radius: 15px;
+    padding: 18px;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+.toast-notif { 
+    display: none; position: fixed; top: 80px; left: 50%; transform: translateX(-50%); 
+    background: white; color: #1a365d; padding: 15px 25px; border-radius: 15px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10001; border-left: 5px solid #25d366; 
+    min-width: 300px; text-align: center; 
+border-bottom: 4px solid #25d366;
+    background: linear-gradient(to right, #ffffff, #f0fff4);
+}
+.btn-lihat-keranjang { display: block; margin-top: 10px; background: #1a365d; color: white; padding: 8px; border-radius: 10px; text-decoration: none; font-size: 0.8rem; font-weight: bold; }
+
+/* Efek Angka Melompat */
+@keyframes jumpCount {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.8); color: #e53e3e; }
+    100% { transform: scale(1); }
+}
+
+.jump {
+    animation: jumpCount 0.4s ease-out;
+}
+
+
+
+
+/* =========================================
+   9. FOOTER & FLOATING WA
+   ========================================= */
+.floating-wa { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: #25d366; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; }
+footer { background-color: #1a365d; color: #a0aec0; padding: 50px 10%; text-align: center; }
+
+/* =========================================
+   10. MOBILE RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+    nav { flex-direction: column; padding: 15px 5%; gap: 10px; }
+    .nav-links { overflow-x: auto; width: 100%; justify-content: flex-start; padding: 10px 0; scrollbar-width: none; }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .tab-link { white-space: nowrap; font-size: 0.85rem; padding: 5px 12px; background: rgba(255,255,255,0.1); border-radius: 20px; }
+    
+    .hero { padding: 40px 5%; min-height: 50vh; }
+    .hero h1 { font-size: 1.8rem; }
+
+    .menu-grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 12px !important; padding: 10px !important; }
+    .card { width: 100% !important; }
+    .card-img { height: 130px; }
+    .card-body h3 { font-size: 0.9rem; }
+    
+    .testi-grid, .order-grid { flex-direction: column; align-items: center; }
+    .testi-item, .order-step { width: 100% !important; }
+    
+    #cart-icon { bottom: 85px; right: 20px; width: 50px; height: 50px; }
+    .floating-wa { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+}
+
+/* Container Box Lokasi */
+.lokasi-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 40px;
+    background: white;
+    padding: 40px;
+    border-radius: 35px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+.lokasi-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Styling Peta agar melengkung rapi */
+.lokasi-map {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border: 5px solid #f8fbff;
+}
+
+.area-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 30px;
+}
+
+.area-tag {
+    background: #ebf8ff;
+    color: #2b6cb0;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* Container Testimoni */
+.testi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.badge-verified {
+    background: #e6fffa;
+    color: #319795;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.testi-item {
+    position: relative;
+    border-top: 4px solid #f6ad55; /* Kasih aksen warna brand di atas */
+    transition: 0.3s;
+}
+
+.testi-item:hover {
+    border-top-color: #2b6cb0; /* Berubah jadi biru saat dihover */
+}
+
+.user-info small {
+    display: block;
+    color: #718096;
+    margin-top: 2px;
+}
+
+.quote-icon {
+    color: #edf2f7;
+    font-size: 2rem;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 0;
+}
+
+.testi-item p {
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+    color: #4a5568;
+}
+
+
+/* =========================================
+   POLESAN HALUS SECTION STATISTIK
+   ========================================= */
+
+/* Container Utama (Latar Belakang Navy Soft) */
+.stats-section {
+    background: linear-gradient(135deg, #1a365d, #2a4365); /* Gradasi Navy Halus */
+    color: white;
+    padding: 60px 10%; /* Padding dikurangi agar tidak terlalu "makan tempat" */
+    border-radius: 30px; /* Pojok section dibuat melengkung halus */
+    margin: 40px 10%; /* Memberi jarak dari pinggir layar dan section lain */
+    box-shadow: 0 15px 35px rgba(26, 54, 93, 0.1); /* Bayangan super halus */
+}
+
+/* Grid Layout */
+.stats-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px; /* Jarak antar item dikurangi */
+}
+
+/* Item Statistik Individu */
+.stat-item {
+    text-align: center;
+    flex: 1;
+    min-width: 180px; /* Sedikit dikecilkan */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03); /* Efek kaca super tipis */
+    border-radius: 20px; /* Pojok item melengkung */
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Garis tepi halus */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efek Hover Halus */
+.stat-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Ikon (Dikecilkan warnanya dibuat lebih soft) */
+.stat-item i {
+    font-size: 2rem; /* Ukuran ikon dikurangi */
+    color: #fbd38d; /* Warna Oranye dibuat lebih muda/soft */
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+/* Angka Counter (Dikecilkan) */
+.stat-item h2 {
+    font-size: 2.2rem; /* Ukuran angka dikurangi drastis */
+    margin-bottom: 5px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+/* Teks Deskripsi (Lebih kecil dan elegan) */
+.stat-item p {
+    font-size: 0.85rem; /* Ukuran teks dikurangi */
+    color: #cbd5e0; /* Warna abu-abu lebih muda */
+    text-transform: uppercase;
+    letter-spacing: 1.5px; /* Jarak antar huruf disesuaikan */
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Responsif untuk HP */
+@media (max-width: 768px) {
+    .stats-section {
+        margin: 20px 5%;
+        padding: 40px 5%;
+        border-radius: 20px;
+    }
+    .stat-item h2 {
+        font-size: 1.8rem;
+    }
+}
+
+
+.sales-notif {
+    position: fixed;
+    bottom: 20px;
+    left: -400px; /* Sembunyi dulu di kiri */
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 9999;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-width: 300px;
+    border-left: 5px solid #f6ad55;
+}
+
+.sales-notif.show {
+    left: 20px; /* Muncul ke layar */
+}
+
+.notif-img img {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.notif-content p {
+    font-size: 0.85rem;
+    margin: 0;
+    color: #2d3748;
+    line-height: 1.3;
+}
+
+.notif-content small {
+    color: #a0aec0;
+    font-size: 0.7rem;
+}
+
+.close-notif {
+    background: none;
+    border: none;
+    color: #cbd5e0;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0 5px;
+}
+
+@media (max-width: 768px) {
+    .sales-notif {
+        bottom: 80px; /* Biar nggak tumpukan sama tombol WA/Keranjang */
+        max-width: 260px;
+    }
+}
+
+/* 1. Tampilan Tombol Switch */
+.dark-mode-switch {
+    background: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
+    margin-left: 15px;
+}
+
+.dark-mode-switch:hover {
+    background: #f6ad55;
+    color: #1a365d;
+}
+
+/* 2. Definisi Warna Gelap (Dark Mode) */
+body.dark-theme {
+    background-color: #0f172a; /* Hitam Navy Pekat */
+    color: #e2e8f0;
+}
+
+body.dark-theme .card, 
+body.dark-theme .testi-item, 
+body.dark-theme .lokasi-box,
+body.dark-theme .faq-item,
+body.dark-theme .modal-content {
+    background-color: #1e293b; /* Abu-abu Gelap */
+    color: #f8fafc;
+    border: 1px solid #334155;
+}
+
+body.dark-theme .order-step {
+    background: #1e293b;
+    border: 1px solid #334155;
+}
+
+body.dark-theme h1, body.dark-theme h2, body.dark-theme h3 {
+    color: #fff;
+}
+
+body.dark-theme p {
+    color: #94a3b8;
+}
+/* =========================================
+    FINAL DARK MODE - CLEAN & FIXED
+   ========================================= */
+
+/* Latar Belakang & Teks Dasar */
+body.dark-theme {
+    background-color: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+/* Navigasi & Hero */
+body.dark-theme nav, 
+body.dark-theme footer { 
+    background-color: #000000 !important; 
+}
+body.dark-theme .hero { 
+    background-color: #111827 !important; 
+}
+
+/* Kotak Konten (Card, Lokasi, FAQ, dll) */
+body.dark-theme .card, 
+body.dark-theme .testi-item, 
+body.dark-theme .lokasi-box,
+body.dark-theme .faq-item,
+body.dark-theme .modal-content,
+body.dark-theme .order-step,
+body.dark-theme .faq-question,
+body.dark-theme .faq-answer {
+    background-color: #1e293b !important; 
+    color: #f8fafc !important;
+    border: 1px solid #334155 !important;
+}
+
+/* FIX UTAMA: Pastikan Tab Aktif Tetap Muncul */
+body.dark-theme .tab-content.active-tab {
+    display: block !important;
+}
+
+/* Elemen Form (Dropdown Ongkir & Input) */
+body.dark-theme select, 
+body.dark-theme input,
+body.dark-theme #pilihWilayah {
+    background-color: #0f172a !important;
+    color: white !important;
+    border: 1px solid #475569 !important;
+}
+
+/* Tipografi & Kontras */
+body.dark-theme h1, body.dark-theme h2, body.dark-theme h3,
+body.dark-theme .card-body h3, body.dark-theme .testi-user strong,
+body.dark-theme .logo-text {
+    color: #ffffff !important;
+}
+
+body.dark-theme p, 
+body.dark-theme .hero p, 
+body.dark-theme .faq-answer p, 
+body.dark-theme .user-info small {
+    color: #94a3b8 !important;
+}
+
+/* UI Extra (Notif & Toast) */
+body.dark-theme .sales-notif,
+body.dark-theme .toast-notif {
+    background-color: #1e293b !important;
+    color: white !important;
+    border: 1px solid #334155 !important;
+}
+
+/* Update bagian ini di CSS Dark Mode kamu */
+body.dark-theme .stats-section {
+    background-image: none !important; /* MENGHAPUS GRADASI BIRU */
+    background-color: #1e293b !important; /* GANTI JADI NAVY GELAP */
+    border: 1px solid #334155 !important;
+}
+
+/* Tambahkan juga ini agar kotak di dalamnya tidak transparan/aneh */
+body.dark-theme .stat-item {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #1a365d; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #f6ad55; }
+
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/pantry-dark-gray.png'); /* Pola halus alat dapur */
+    opacity: 0.03; /* Sangat tipis biar nggak ganggu baca */
+    pointer-events: none;
+    z-index: -1;
+}
+
+body.dark-theme::before {
+    opacity: 0.05;
+    filter: invert(1);
+}
+
+
+.sosmed-link {
+    color: white; /* Warna ikon standar */
+    text-decoration: none;
+    transition: 0.3s;
+    display: inline-block;
+    cursor: pointer; /* Memastikan kursor berubah jadi tangan saat disentuh */
+    position: relative;
+    z-index: 10; /* Memastikan link berada di atas tekstur background */
+}
+
+.sosmed-link:hover {
+    color: #f6ad55 !important; /* Berubah jadi oranye brand saat disentuh */
+    transform: translateY(-5px); /* Efek melompat kecil */
+}
+
+
+/* Styling Notifikasi Salin Rekening */
+.toast-salin {
+    position: fixed;
+    bottom: -100px; /* Sembunyi di bawah dulu */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26, 54, 93, 0.95); /* Navy transparan mewah */
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px; /* Bentuk kapsul */
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    z-index: 10002;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Efek membal/bounce */
+    border: 2px solid #f6ad55; /* Aksen oranye di pinggir */
+    white-space: nowrap;
+}
+
+/* Class untuk memunculkan toast */
+.toast-salin.show {
+    bottom: 40px; /* Muncul ke atas */
+}
+
+
+/* Efek Kertas Struk Keluar */
+@keyframes paperSlide {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    100% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+}
+
+/* Perbaikan Efek Struk Agar Tidak Bocor Putih */
+.struk-animasi {
+    background: rgba(255, 255, 255, 0.05); /* Pakai putih transparan tipis saja */
+    border-top: 2px dashed rgba(255, 255, 255, 0.2);
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+    padding: 20px 10px;
+    margin: 15px 0;
+    position: relative;
+    animation: paperSlide 0.6s ease-out;
+}
+
+/* HAPUS atau MATIKAN bagian ::after yang bikin gerigi putih aneh tadi */
+.struk-animasi::after {
+    display: none; /* Ini yang bikin kotak putih di gambar kamu */
+}
+
+/* Lubang-lubang di pinggir struk */
+.struk-animasi::after {
+    content: "";
+    position: absolute;
+    bottom: -10px; left: 0; width: 100%; height: 10px;
+    background-image: radial-gradient(circle, transparent 70%, #fff 70%);
+    background-size: 20px 20px;
+    background-position: 0 -10px;
+}
+
+
+/* --- PERBAIKAN BAR GRATIS ONGKIR DKV --- */
+
+/* 1. Container Luar (Kotak Putih yang Mau Kita Hapus) */
+
+/* 3. Bar Bagian Dalam (Latar Belakang Bar-nya) */
+.progress-container {
+    width: 100%;
+    height: 10px; /* Ukuran bar-nya */
+    
+    /* Warna Latar Bar yang Sedikit Lebih Terang dari Modal */
+    background-color: rgba(255, 255, 255, 0.1); 
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 4. Bar yang Jalan (Warna Oranye) */
+#shipping-bar {
+    height: 100%;
+    
+    /* Gradasi Warna Oranye Mewah yang Lari-Lari */
+    background: linear-gradient(90deg, #fbd38d, #f6ad55);
+    background-size: 200% 100%;
+    animation: gradientShift 2s infinite linear;
+    
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- ANIMASI JALAN ORANYE --- */
+@keyframes gradientShift {
+    0% { background-position: 100% 0; }
+    100% { background-position: 0 0; }
+}
+
+
+/* 1. GARIS PADA BAR ONGKIR (50.000) */
+#free-shipping-goal {
+    background-color: #fffaf0 !important; /* Latar krem biar teks kebaca */
+    border: 1px dashed #2d3748 !important; /* Abu-abu tua pekat (hampir hitam) */
+    padding: 15px;
+    border-radius: 15px;
+}
+
+/* 2. GARIS PADA LIST PRODUK (STRUK) */
+.item-keranjang {
+    border-bottom: 1px dashed #2d3748 !important; /* Garis bawah tiap produk */
+    padding: 12px 0;
+}
+
+/* 3. GARIS PADA BOX REKENING (PALING BAWAH) */
+.box-rekening, 
+[style*="dashed"] { 
+    /* Kode ini otomatis menangkap semua elemen yang pakai garis putus-putus */
+    border: 1px dashed #2d3748 !important;
+}
+
+/* Taruh di bagian paling bawah style.css */
+.deskripsi-singkat {
+    font-size: 0.75rem; /* Ukuran font proposional untuk deskripsi */
+    color: #031a38;    /* Warna abu-abu agar fokus tetap ke Nama & Harga */
+    margin: 8px 0 15px 0; 
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: left;    /* Mengikuti alur baca Nama Produk */
+}
+
+/* --- CSS UNTUK TANDA MENU HABIS (DKV FOCUS) --- */
+
+/* 1. Atur container gambar agar tulisan bisa melayang di atasnya */
+.card-img {
+    position: relative; /* Wajib! Agar tanda HABIS nempel di sini */
+    overflow: hidden;
+}
+
+/* 2. Tanda HABIS (Overlay) */
+.habis-badge {
+    position: absolute; /* Melayang di atas gambar */
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    
+    /* Warna Merah Marun Transparan agar gambar di bawahnya masih samar kelihatan */
+    background-color: rgba(139, 0, 0, 0.85); 
+    
+    color: white !important;
+    font-weight: 800; /* Super Bold */
+    font-size: 1.5rem; /* Ukuran besar tapi proporsional */
+    text-transform: uppercase; /* Huruf besar semua */
+    letter-spacing: 2px; /* Jarak antar huruf biar estetik */
+    
+    /* Posisi Tulisan Tepat di Tengah Gambar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Layer paling depan di dalam kotak gambar */
+    z-index: 10;
+    
+    /* Animasi muncul halus saat loading */
+    animation: habisFadeIn 0.5s ease;
+}
+
+/* 3. Animasi Muncul */
+@keyframes habisFadeIn {
+    from { opacity: 0; transform: scale(1.1); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* 4. Tambahan: Biar card yang habis gak bisa diklik hover */
+.card.habis:hover {
+    transform: none !important;
+    cursor: default;
+}
+
+/* Matikan semua fungsi klik pada kartu habis */
+.card.habis {
+    pointer-events: none !important; /* MEMATIKAN KLIK TOTAL */
+    cursor: not-allowed !important;  /* KURSOR JADI TANDA LARANGAN */
+    filter: grayscale(1) opacity(0.7); /* EFEK VISUAL MATI */
+    transform: none !important;      /* JANGAN ADA ANIMASI MELAYANG */
+}
+
+/* Tambahan styling untuk tombol yang mati */
+.btn-beli-mati {
+    background: #4a5568 !important;
+    color: #cbd5e0 !important;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-align: center;
+}
