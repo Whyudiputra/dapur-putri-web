@@ -13,4 +13,4 @@ Proyek ini adalah sistem pemesanan berbasis web yang dibangun untuk digitalisasi
 - **Design Tools:** Adobe Photoshop & Illustrator untuk aset visual.
 
 ---
-🔗 **Live Demo:** [Link Netlify Lo Di Sini][cite: 1]
+🔗 **Live Demo:** [https://dapurputri.netlify.app/#][cite: 1]
